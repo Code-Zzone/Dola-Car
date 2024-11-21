@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمات صيانة السيارات - محمد عادل</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Preload للصور لتحسين الأداء -->
+    <link rel="preload" href="images/fix-2.webp" as="image">
+    <link rel="preload" href="images/fix-4.webp" as="image">
+     <!-- Preconnect لتحسين تحميل الموارد -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- <script src="script/services.js"></script> -->
+</head>
+<body id="body"> 
+    <!-- أيقونة واتساب -->
+<a href="https://wa.me/+201140767985" target="_blank" class="whatsapp-icon">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ75KzcZJMW7mC6vsA8vNOzkAc5AwfOWzN6U6UzC5MhSgeSpAaEvZIddWj6CS3lkgKAQc&usqp=CAU" alt="WhatsApp" width="50" height="50">
+</a>
+    <!-- Visitor Welcome Message -->
+        <div class="back-ask" id="backAsk">
+            <div id="visitorMessage" class="visitor-message">
+                <p>هل هذه أول زيارة لك؟</p>
+               <div class="btns">
+                <button id="yesButton">نعم</button>
+                <button id="noButton">لا</button>
+               </div>
+            </div>
+        </div>
+<header>
+    <!-- التغيير اليانا عايزو هنا -->
+    <div class="logo">
+        <a href="#" id="siteLink"></a>
+      </div>
+    <!-- لحد هنا فقط -->
+    <ul class="large-screen">
+        <li><a href="#home">الرئيسية</a></li>
+        <li><a href="#services">الخدمات</a></li>
+        <li><a href="#gallery">امثلة مصورة</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+    </ul>
+    <div class="list-mobile">
+        <div class="child-list">
+            <div class="option"></div>
+            <div class="option ch"></div>
+            <div class="option"></div>
+            <ul class="small-screen">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#gallery">امثلة مصورة</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+    <!-- قسم البطل -->
+    <section class="hero" id="home">
+        <!-- <h1 id="heading">محمد عادل - خدمات صيانة السيارات</h1> -->
+        <h1 id="heading"></h1>
+        <!-- <p>خدمة صيانة احترافية لجميع أنواع السيارات، مع إمكانية الوصول إلى باب منزلك</p> -->
+         <p id="decription"></p>
+        <button onclick="document.getElementById('contact').scrollIntoView()" id="orderNow">احجز الآن</button>
+    </section>
+    <!-- قسم الخدمات -->
+    <section class="section" id="services">
+        <h2 id="headingServices">خدماتنا</h2>
+        <div class="services">
+            <div class="service-box">
+                <h3 id="serviceHeadingOne">تغيير الزيت</h3>
+                <p id="serviceDescriptionOne">تغيير الزيت باستخدام أفضل الزيوت المتاحة للحفاظ على محرك سيارتك.</p>
+                <span>1</span>
+            </div>
+            <div class="service-box">
+                <h3 id="serviceHeadingTwo">فحص الأعطال</h3>
+                <p id="serviceDescriptionTwo">تشخيص شامل لأعطال السيارة وتقديم حلول إصلاح دقيقة.</p>
+                <span>2</span>
+            </div>
+            <div class="service-box">
+                <h3 id="serviceHeadingThree">صيانة دورية</h3>
+                <p id="serviceDescriptionThree">إجراء الصيانة الدورية الضرورية لضمان أداء عالٍ للمركبة.</p>
+                <span>3</span>
+            </div>
+            <div class="service-box">
+                <h3 id="serviceHeadingFour">خدمة منزلية</h3>
+                <p id="serviceDescriptionFour">نصل إليك في أي وقت لإجراء الصيانة في موقعك بمرونة وراحة.</p>
+                <span>4</span>
+            </div>
+        </div>
+    </section>
+    <!-- قسم معرض الصور -->
+    <section class="section" id="gallery">
+        <h2>امثلة مصورة</h2>
+        <div class="gallery">
+            <img src="images/fix-2.webp" alt="خدمة 1">
+            <img src="images/fix-4.webp" alt="خدمة 2">
+        </div>
+    </section>
+    <!-- قسم من نحن -->
+    <section class="section" id="about">
+        <h2 id="aboutUsHeading">من نحن</h2>
+        <p id="aboutUs"></p>
+    </section>
+   <!-- Contact Section -->
+   <section id="contact" class="section">
+    <div class="contact-form">
+        <h2>تواصل معنا</h2>
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="الاسم" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="number" id="phone" placeholder="رقم الهاتف " required>
+            <textarea id="message" placeholder="الرسالة" required></textarea>
+            <button type="submit" class="btn">إرسال</button>
+        </form>
+        <div class="social-midea">
+            <h3>أو يمكنك التواصل معنا عبر</h3>
+            <a href="https://www.facebook.com/profile.php?id=61564847470638&sk=reels_tab" target="_blank">facebook</a>
+        </div>
+    </div>
+</section>
+    <!-- زر التمرير لأعلى -->
+    <button class="scroll-to-top" onclick="window.scrollTo({top: 0,behavior: 'smooth'});">↑</button>
+    <!-- الفوتر -->
+    <footer>
+        <!-- <p>Made By <a href=" https://mahmoud-a-hamed.github.io/protfolio" target="_blank" class="link-mahmoud">Mahmoud Hamed</a>&copy;2024</p> -->
+         <p>تم التصميم بواسطة <a href="https://mahmoud-a-hamed.github.io/protfolio" target="_blank" class="design">محمود حامد </a> © 2024 جميع الحقوق محفوظة</p>
+    </footer>
+      <!-- إضافة ملف JavaScript الخاص بك -->
+      <script src="script/script.js" type="module" defer></script>
+</body>
+</html>

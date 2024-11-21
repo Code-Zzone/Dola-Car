@@ -1,0 +1,404 @@
+/* إعدادات عامة */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+*  {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Kufi Arabic", sans-serif;
+    scroll-behavior: smooth;
+}
+body  {
+    background-color: #5e5d5d;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+    direction: rtl;
+}
+header  {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: #000;
+    padding: 20px;
+}
+.logo a  {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.logo a:hover  {
+    color: #bdbcbc;
+}
+/* زر الواتس اب */
+.whatsapp-icon  {
+    position: fixed;
+    bottom: 120px;
+    right: 30px;
+    background-color: #000;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 50px;
+    display: flex;
+    z-index: 10;
+}
+.whatsapp-icon img  {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.whatsapp-icon:hover  {
+    background-color: #128c7e;
+}
+.link-mahmoud  {
+    color: white;
+    margin: 0 10px;
+}
+/* قسم البطل */
+.hero  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.486), rgba(0, 0, 0, 0.37)), url('../images/fix-3.webp') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+}
+.hero h1  {
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    animation: fadeIn 2s ease;
+}
+.hero p  {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    max-width: 700px;
+    animation: fadeIn 2.5s ease;
+}
+.hero button  {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    animation: fadeIn 3s ease;
+    border-radius: 5px;
+}
+.hero button:hover  {
+    background-color: #fff;
+    color: black;
+}
+/* تنسيق الأقسام */
+.section  {
+    padding: 80px 20px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-in-out;
+    background-color: #bdbcbc;
+}
+.section.visible  {
+    opacity: 1;
+    transform: translateY(0);
+}
+.section h2  {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+.section p  {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: #666;
+}
+/* خدمات */
+.services  {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.service-box  {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+.service-box span  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #000;
+    color: white;
+    padding: 0 10px;
+}
+.service-box:hover  {
+    transform: translateY(-10px);
+}
+.service-box h3  {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+}
+.service-box p  {
+    color: #666;
+}
+/* نموذج التواصل */
+.contact-form  {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.contact-form label  {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+.contact-form input,
+.contact-form textarea  {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.contact-form button  {
+    width: 100%;
+    padding: 15px;
+    background-color: #000;
+    color: #333;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #fff;
+}
+.contact-form button:hover  {
+    background-color: #fff;
+    color:#000;
+    border: 1px solid black;
+}
+/* قسم الصور */
+.gallery  {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0;
+}
+.gallery img  {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.gallery img:hover  {
+    transform: scale(1.05);
+}
+/* زر التمرير لأعلى */
+.scroll-to-top  {
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    background-color: #000;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    overflow: hidden;
+    width: fit-content;
+    height: fit-content;
+}
+.scroll-to-top:hover  {
+    background-color: #ffa;
+    color: #000;
+}
+/* الفوتر */
+footer  {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+}
+/* حركات */
+@keyframes fadeIn  {
+    from  {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to  {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.back-ask  {
+    position: fixed;
+    z-index: 100;
+    background-color: #000000b6;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.visitor-message  {
+    background-color: #232222e1;
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    row-gap: 20px;
+}
+.visitor-message p  {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+.visitor-message button  {
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: bold;
+    width: 60px;
+}
+.visitor-message button:hover  {
+    background-color: #000;
+    color: white;
+    outline: none;
+    border: none;
+}
+.social-midea  {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.social-midea a  {
+    color: black;
+}
+/* mobile screen start */
+.large-screen  {
+    width: 50%;
+    justify-content: space-around;
+    display: flex;
+    list-style: none;
+    height: 50px;
+    align-items: center;
+}
+.large-screen li a  {
+    text-decoration: none;
+    color: #fff;
+}
+.large-screen li a:hover  {
+    color: #bdbcbc;
+}
+.list-mobile  {
+    display: none;
+}
+@media (max-width: 1200px)  {
+    .list-mobile  {
+        display: block;
+    }
+    .large-screen  {
+        display: none;
+    }
+}
+.small-screen  {
+    width: 100%;
+    background-color: #000;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    display: none;
+    flex-direction: column;
+    list-style: none;
+    padding: 20px;
+    row-gap: 20px;
+}
+.small-screen::before  {
+    content: "";
+    width: 0;
+    height: 0;
+    border: 15px solid black;
+    border-color: transparent transparent black transparent;
+    position: absolute;
+    top: -30px;
+}
+.small-screen li  {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid white;
+    padding: 10px 0;
+}
+.small-screen li a  {
+    text-decoration: none;
+    color: #fff;
+}
+.small-screen li:hover a  {
+    color: #bdbcbc;
+    padding-right: 20px;
+    transition: 0.5s;
+}
+.list-mobile .child-list  {
+    width: 50px;
+    height: 50px;
+    background-color: #0c0b0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    row-gap: 5px;
+    flex-direction: column;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.child-list:hover .small-screen  {
+    display: block !important;
+}
+.list-mobile .child-list:hover .ch  {
+    width: 30px !important;
+    transition: 0.5s;
+}
+.list-mobile .child-list .option  {
+    width: 30px;
+    height: 2px;
+    background-color: #fff;
+}
+.list-mobile .child-list  .ch  {
+    width: 15px !important;
+    height: 2px;
+    background-color: #fff;
+}
+/* mobile screen end */
+.design  {
+    color: #fff;
+}

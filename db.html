@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="css/db.css"> -->
+  <title>لوحة تحكم محمد عادل</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #2e2e2e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow-y: auto;
+      direction: rtl;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    h3 {
+      margin: 20px 0;
+      color: #f1f1f1;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      overflow: auto;
+    }
+
+    input[type="text"],
+    textarea {
+      padding: 12px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 100%;
+      background-color: #444;
+      border: 1px solid #555;
+      color: white;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .update-btn {
+      background-color: #2196F3;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .update-btn:hover {
+      background-color: #1976D2;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #555;
+      background-color: #444;
+    }
+
+    th {
+      background-color: #555;
+    }
+
+    td {
+      background-color: #333;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+    }
+
+    .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .edit-btn,
+    .save-btn {
+      background-color: #ffa500;
+    }
+
+    .edit-btn:hover,
+    .save-btn:hover {
+      background-color: #e67e22;
+    }
+
+    .message-container {
+      background-color: #4caf50;
+      color: white;
+      padding: 15px 0;
+      margin-top: 20px;
+      border-radius: 5px;
+      display: none;
+      width: 100%;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .message-container.error {
+      background-color: #f44336;
+    }
+
+    .message-container.success {
+      background-color: #4caf50;
+    }
+
+
+    .btn-close-default {
+      background-color: #ffffff;
+      color: black;
+      width: 30px;
+      text-align: center;
+      padding: 5px;
+      border-radius: 5px;
+      transition: 0.5s;
+      font-size: 25px;
+      font-weight: bold;
+      margin: 20px 0 0 50%;
+      translate: -50%;
+    }
+
+    .btn-close-default:hover {
+      cursor: pointer;
+      background-color: #000;
+      color: #fff;
+      padding: 4px;
+    }
+
+    .btn-edit-default {
+      background-color: #2196F3;
+      margin-top: 10px;
+      padding: 10px 0;
+      text-align: center;
+      border-radius: 5px;
+      transition: 0.5s;
+    }
+
+    .btn-edit-default:hover {
+      background-color: #1976D2;
+      cursor: pointer;
+
+    }
+
+    /* تحسين التوافق مع الهواتف */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 18px;
+        /* position: absolute; */
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      input[type="text"],
+      textarea,
+      .update-btn,
+      button {
+        padding: 14px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>لوحة تحكم</h1>
+
+  <div class="container">
+    <!-- عرض اسم الموقع -->
+    <h3>اسم الموقع: <span id="siteName">غير محدد</span></h3>
+
+    <!-- حقل تغيير اسم الموقع -->
+    <div>
+      <input type="text" id="siteNameInput" placeholder="أدخل اسم الموقع">
+      <button class="update-btn" onclick="updateSiteName()">تحديث اسم الموقع</button>
+    </div>
+
+    <!-- بداية اول جزء في الموقع -->
+    <div class="edit-first-section btn-edit-default" onclick="showEditFirstSection();">تعديل اول جزء في الموقع</div>
+
+    <div class="first-section-container" id="firstSection" style="display: none;">
+      <div class="btn-close-default" onclick="closeEditFirstSection()">X</div>
+
+      <!-- حقل تغيير عنوان الموقع -->
+      <h3>تغيير عنوان الموقع</h3>
+      <div>
+        <textarea id="siteHeadingInput" placeholder="أدخل عنوان الموقع" rows="4"></textarea>
+        <button class="update-btn" onclick="updateSiteHeading()">تحديث عنوان الموقع</button>
+      </div>
+
+      <!-- حقل تغيير وصف الموقع -->
+      <div>
+        <h3>تغيير وصف الموقع</h3>
+        <textarea id="siteDescriptionInput" placeholder="أدخل وصف الموقع" rows="4"></textarea>
+        <button class="update-btn" onclick="updateSiteDescription()">تحديث وصف الموقع</button>
+      </div>
+
+      <!-- حقل تغيير نص زر الحجز -->
+      <div>
+        <h3>تغيير نص زر الحجز</h3>
+        <input type="text" id="bookingButtonTextInput" placeholder="أدخل نص زر الحجز">
+        <button class="update-btn" onclick="updateBookingButtonText()">تحديث نص زر الحجز</button>
+      </div>
+    </div>
+    <!-- نهاية اول جزء في الموقع -->
+
+
+    
+
+    <!-- زر ظهور تغييرات جزء الخدمات -->
+    <div class="edit-services btn-edit-default" onclick="showEditServices();">تعديل جزء الخدمات</div>
+    <div class="services-container" style="display: none;" id="editServices">
+      <div class="btn-close-default" onclick="closeEditServices()">X</div>
+      <!-- حقل تغيير عنوان الخدمات -->
+      <div>
+        <h3>تغيير عنوان الخدمات</h3>
+        <input type="text" id="servicesHeadingInput" placeholder="أدخل عنوان الخدمات">
+        <button class="update-btn" onclick="updateServicesHeading()">تحديث عنوان الخدمات</button>
+      </div>
+
+
+      <!-- حقل تغيير عنوان خدمة  رقم 1 -->
+      <div>
+        <h3>تغيير عنوان خدمة رقم 1</h3>
+        <input type="text" id="serviceOneHeadingInput" placeholder="أدخل عنوان خدمة معينة رقم 1">
+        <button class="update-btn" onclick="updateServiceOneHeading()">تحديث عنوان خدمة معينة رقم 1</button>
+      </div>
+
+
+      <!-- حقل تغيير عنوان خدمة  رقم 2 -->
+      <div>
+        <h3>تغيير عنوان خدمة رقم 2</h3>
+        <input type="text" id="serviceTwoHeadingInput" placeholder="أدخل عنوان خدمة معينة رقم 2">
+        <button class="update-btn" onclick="updateServiceTwoHeading()">تحديث عنوان خدمة معينة رقم 2</button>
+      </div>
+
+
+      <!-- حقل تغيير عنوان خدمة  رقم 3 -->
+      <div>
+        <h3>تغيير عنوان خدمة رقم 3</h3>
+        <input type="text" id="serviceThreeHeadingInput" placeholder="أدخل عنوان خدمة معينة رقم 3">
+        <button class="update-btn" onclick="updateServiceThreeHeading()">تحديث عنوان خدمة معينة رقم 3</button>
+      </div>
+      <!-- حقل تغيير عنوان خدمة  رقم 4 -->
+      <div>
+        <h3>تغيير عنوان خدمة رقم 4</h3>
+        <input type="text" id="serviceFourHeadingInput" placeholder="أدخل عنوان خدمة معينة رقم 4">
+        <button class="update-btn" onclick="updateServiceFourHeading()">تحديث عنوان خدمة معينة رقم 4</button>
+      </div>
+      <!-- تعديل جزء وصف كل خدمة -->
+      <div class="description-services">
+        <!-- حقل تغيير وصف خدمة  رقم 1 -->
+        <div>
+          <h3>تغيير وصف خدمة رقم 1</h3>
+          <input type="text" id="serviceOneDescriptionInput" placeholder="أدخل وصف خدمة رقم 1">
+          <button class="update-btn" onclick="updateServiceOneDescription()">تحديث وصف خدمة رقم 1</button>
+        </div>
+        <!-- حقل تغيير وصف خدمة  رقم 2 -->
+        <div>
+          <h3>تغيير وصف خدمة رقم 2</h3>
+          <input type="text" id="serviceTwoDescriptionInput" placeholder="أدخل وصف خدمة رقم 2">
+          <button class="update-btn" onclick="updateServiceTwoDescription()">تحديث وصف خدمة رقم 2</button>
+        </div>
+        <!-- حقل تغيير وصف خدمة  رقم 3 -->
+        <div>
+          <h3>تغيير وصف خدمة رقم 3</h3>
+          <input type="text" id="serviceThreeDescriptionInput" placeholder="أدخل وصف خدمة رقم 3">
+          <button class="update-btn" onclick="updateServiceThreeDescription()">تحديث وصف خدمة رقم 3</button>
+        </div>
+        <!-- حقل تغيير وصف خدمة  رقم 4 -->
+        <div>
+          <h3>تغيير وصف خدمة رقم 4</h3>
+          <input type="text" id="serviceFourDescriptionInput" placeholder="أدخل وصف خدمة رقم 4">
+          <button class="update-btn" onclick="updateServiceFourDescription()">تحديث وصف خدمة رقم 4</button>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- بداية جزء من نحن -->
+    <div class="edit-about btn-edit-default" onclick="showEditAboutUs();">تعديل جزء من نحن</div>
+
+    <div class="about-us-container" id="editAboutUs" style="display: none;">
+      <div class="btn-close-default" onclick="closeEditAboutUs()">X</div>
+      <!-- حقل تغيير  عنوان من نحن -->
+      <div>
+        <h3>تغيير عنوان من نحن</h3>
+        <textarea id="aboutUsHeadingInput" placeholder="أدخل عنوان  من نحن" rows="4"></textarea>
+        <button class="update-btn" onclick="updateAboutUsHeading()">تحديث عنوان من نحن</button>
+      </div>
+
+
+      <!-- حقل تغيير وصف من نحن -->
+      <div>
+        <h3>تغيير وصف من نحن</h3>
+        <textarea id="aboutUsDescriptionInput" placeholder="أدخل وصف قسم من نحن" rows="4"></textarea>
+        <button class="update-btn" onclick="updateAboutUsDescription()">تحديث وصف من نحن</button>
+      </div>
+    </div>
+    <!-- نهاية جزء من نحن -->
+
+
+    <!-- رسالة نجاح أو خطأ -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <!-- عدد الزوار -->
+    <h3>عدد الزوار: <span id="visitorCount">0</span></h3>
+
+    <!-- عرض حجم البيانات -->
+    <div id="sizeInfo">
+      <p>حجم البيانات: <span id="dataSize">0</span> كيلوبايت</p>
+    </div>
+
+    <!-- زر مسح جميع البيانات -->
+    <button onclick="deleteAllData()">مسح جميع البيانات</button>
+
+    <!-- جدول لعرض العملاء -->
+    <h2>العملاء</h2>
+
+    <table id="customersTable">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>البريد الإلكتروني</th>
+          <th>رقم الهاتف </th>
+          <th>الرسالة</th>
+          <th>التوقيت</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody id="customersBody">
+        <!-- سيتم إدراج البيانات هنا -->
+      </tbody>
+    </table>
+  </div>
+  <!-- تضمين مكتبات Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDZNhlq4a1DWW2LTbMTaUJhA1MIPkeq1UY",
+      authDomain: "mohamed-adel-e2e13.firebaseapp.com",
+      databaseURL: "https://mohamed-adel-e2e13-default-rtdb.firebaseio.com",
+      projectId: "mohamed-adel-e2e13",
+      storageBucket: "mohamed-adel-e2e13.firebasestorage.app",
+      messagingSenderId: "806857656486",
+      appId: "1:806857656486:web:407269dafb311284b6cc67"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    // بداية جزء عدد الزوار وجدول العملاء وحجم البيانات 
+    // تحديث عدد الزوار في الوقت الفعلي
+    const updateVisitorCount = () => {
+      const responsesRef = database.ref('/visitorResponses');
+      responsesRef.on('value', snapshot => {
+        const count = snapshot.numChildren();
+        document.getElementById('visitorCount').textContent = count;
+      });
+    };
+
+    // تحديث حجم البيانات
+    const updateDataSize = () => {
+      const dataRef = database.ref();
+      dataRef.once('value')
+        .then(snapshot => {
+          const size = JSON.stringify(snapshot.val()).length / 1024; // التحويل إلى كيلوبايت
+          document.getElementById('dataSize').textContent = `${size.toFixed(2)} كيلوبايت`;
+        })
+        .catch(error => alert("حدث خطأ أثناء حساب حجم البيانات: " + error.message));
+    };
+
+    // حذف جميع البيانات
+    const deleteAllData = () => {
+      if (confirm("هل أنت متأكد أنك تريد مسح جميع البيانات؟")) {
+        database.ref('/customers').remove()
+          .then(() => database.ref('/visitorResponses').remove())
+          .then(() => {
+            // alert( "تم مسح جميع البيانات بنجاح");
+            // إظهار الرسالة لفترة زمنية معينة ثم إخفاؤها
+            // عرض الرسالة
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = "تم مسح جميع البيانات بنجاح";
+            messageContainer.style.display = "block"; // تأكد من ظهور العنصر
+
+            // إخفاء الرسالة بعد 3 ثوانٍ
+            setTimeout(() => {
+              messageContainer.style.display = "none"; // إخفاء العنصر بعد المدة المحددة
+            }, 2000); // 3000 مللي ثانية تعني 3 ثوانٍ
+            document.getElementById('messageContainer').style.display = 'block';
+            document.getElementById('customersBody').innerHTML = '';
+            updateVisitorCount();
+            updateDataSize();
+          })
+          .catch(error => alert("حدث خطأ أثناء مسح البيانات: " + error.message));
+      }
+    };
+
+    // إضافة عميل إلى الجدول
+    const displayCustomer = (key, data) => {
+      const customersBody = document.getElementById('customersBody');
+      const row = document.createElement('tr');
+      row.id = 'cust-' + key;
+      row.innerHTML = `
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td>${data.phone}</td>
+        <td>${data.message}</td>
+        <td>${data.timestamp}</td>
+        <td><button class="delete-btn" onclick="deleteCustomer('${key}')">حذف</button></td>
+      `;
+      customersBody.appendChild(row);
+    };
+
+    // حذف عميل
+    const deleteCustomer = (key) => {
+      if (confirm("هل أنت متأكد أنك تريد حذف هذا العميل؟")) {
+        database.ref('/customers/' + key).remove()
+          .then(() => {
+            document.getElementById('cust-' + key).remove();
+            // alert("تم حذف العميل بنجاح");
+            // عرض الرسالة
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = "تم حذف العميل بنجاح";
+            messageContainer.style.display = "block"; // تأكد من ظهور العنصر
+
+            // إخفاء الرسالة بعد 3 ثوانٍ
+            setTimeout(() => {
+              messageContainer.style.display = "none"; // إخفاء العنصر بعد المدة المحددة
+            }, 2000); // 3000 مللي ثانية تعني 3 ثوانٍ
+          })
+          .catch(error => alert("حدث خطأ أثناء حذف العميل: " + error.message));
+      }
+    };
+    // عرض العملاء من قاعدة البيانات عند تحميل الصفحة
+    const displayCustomers = () => {
+      const customersRef = database.ref('/customers');
+      customersRef.on('child_added', snapshot => {
+        const customer = snapshot.val();
+        const key = snapshot.key;
+        displayCustomer(key, customer);
+      });
+    };
+
+    // نهاية جزء عدد الزوار وجدول العملاء وحجم البيانات 
+
+
+    // بداية جزء هيدر الموقع
+    // عرض اسم الموقع عند تحميل الصفحة
+    const displaySiteName = () => {
+      const siteNameRef = database.ref('/siteSettings/siteName');
+      siteNameRef.once('value', snapshot => {
+        const siteName = snapshot.val();
+        if (siteName) {
+          document.getElementById('siteName').textContent = siteName;
+        }
+      });
+    };
+
+    // تحديث اسم الموقع في قاعدة البيانات
+    const updateSiteName = () => {
+      const siteNameInput = document.getElementById('siteNameInput').value;
+      if (siteNameInput.trim() === "") {
+        alert("الرجاء إدخال اسم الموقع");
+        return;
+      }
+
+      // تخزين اسم الموقع في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/siteName').set(siteNameInput)
+        .then(() => {
+          document.getElementById('siteName').textContent = siteNameInput;
+          document.getElementById('siteNameInput').value = ""; // مسح الحقل بعد التحديث
+          // alert("تم تحديث اسم الموقع بنجاح");
+          // عرض الرسالة
+          const messageContainer = document.getElementById('messageContainer');
+          messageContainer.innerHTML = "تم تحديث اسم الموقع بنجاح";
+          messageContainer.style.display = "block"; // تأكد من ظهور العنصر
+
+          // إخفاء الرسالة بعد 3 ثوانٍ
+          setTimeout(() => {
+            messageContainer.style.display = "none"; // إخفاء العنصر بعد المدة المحددة
+          }, 2000); // 3000 مللي ثانية تعني 3 ثوانٍ
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث اسم الموقع: " + error.message));
+    };
+
+    // نهاية جزء هيدر الموقع
+
+    // بداية اول جزء في الموقع
+
+    function showEditFirstSection() {
+      document.getElementById('firstSection').style.display = 'block';
+    }
+    function closeEditFirstSection() {
+      document.getElementById('firstSection').style.display = 'none';
+    }
+
+    // تحديث عنوان الموقع في قاعدة البيانات
+    const updateSiteHeading = () => {
+      const siteHeadingInput = document.getElementById('siteHeadingInput').value;
+      if (siteHeadingInput.trim() === "") {
+        alert("الرجاء إدخال عنوان الموقع");
+        return;
+      }
+
+      const siteHeadingRef = database.ref('/siteSettings/heading');
+      siteHeadingRef.set(siteHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان الموقع بنجاح");
+          // document.getElementById('siteHeadingInput').value = "";
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان الموقع: " + error.message));
+    };
+
+    // عرض عنوان الموقع عند تحميل الصفحة
+    const displaySiteHeading = () => {
+      const siteHeadingRef = database.ref('/siteSettings/heading');
+      siteHeadingRef.once('value', snapshot => {
+        const siteHeading = snapshot.val();
+        if (siteHeading) {
+          document.getElementById('siteHeadingInput').value = siteHeading;
+        }
+      });
+    };
+
+
+    // تحديث وصف الموقع في قاعدة البيانات
+    const updateSiteDescription = () => {
+      const siteDescriptionInput = document.getElementById('siteDescriptionInput').value;
+      if (siteDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف الموقع");
+        return;
+      }
+
+      // تخزين وصف الموقع في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/description').set(siteDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف الموقع بنجاح");
+          // document.getElementById('siteDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف الموقع: " + error.message));
+    };
+
+    // عرض وصف الموقع عند تحميل الصفحة
+    const displaySiteDescription = () => {
+      const siteDescriptionRef = database.ref('/siteSettings/description');
+      siteDescriptionRef.once('value', snapshot => {
+        const siteDescription = snapshot.val();
+        if (siteDescription) {
+          document.getElementById('siteDescriptionInput').value = siteDescription;
+        }
+      });
+    };
+
+    // تحديث نص زر الحجز في قاعدة البيانات
+    const updateBookingButtonText = () => {
+      const bookingButtonTextInput = document.getElementById('bookingButtonTextInput').value;
+      if (bookingButtonTextInput.trim() === "") {
+        alert("الرجاء إدخال نص زر الحجز");
+        return;
+      }
+
+      // تخزين نص زر الحجز في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/bookingButtonText').set(bookingButtonTextInput)
+        .then(() => {
+          alert("تم تحديث نص زر الحجز بنجاح");
+          // document.getElementById('bookingButtonTextInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث نص زر الحجز: " + error.message));
+    };
+
+    // تحميل نص زر الحجز عند بداية الصفحة
+    const displayBookingButtonText = () => {
+      const bookingButtonTextRef = database.ref('/siteSettings/bookingButtonText');
+      bookingButtonTextRef.once('value', snapshot => {
+        const bookingButtonText = snapshot.val();
+        if (bookingButtonText) {
+          document.getElementById('bookingButtonTextInput').value = bookingButtonText;
+        }
+      });
+    };
+
+    // نهاية اول جزء في الموقع
+
+    
+
+    // بداية جزء الخدمات
+
+    function showEditServices() {
+      document.getElementById('editServices').style.display = 'block';
+    }
+    function closeEditServices() {
+      document.getElementById('editServices').style.display = 'none';
+    }
+
+    // تحديث عنوان الخدمات في قاعدة البيانات
+    const updateServicesHeading = () => {
+      const servicesHeadingInput = document.getElementById('servicesHeadingInput').value;
+      if (servicesHeadingInput.trim() === "") {
+        alert("الرجاء إدخال عنوان الخدمات");
+        return;
+      }
+
+      // تخزين عنوان الخدمات في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/servicesHeading').set(servicesHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان الخدمات بنجاح");
+          // document.getElementById('servicesHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان الخدمات: " + error.message));
+    };
+
+    // تحميل عنوان الخدمات عند بداية الصفحة
+    const displayServicesHeading = () => {
+      const servicesHeadingRef = database.ref('/siteSettings/servicesHeading');
+      servicesHeadingRef.once('value', snapshot => {
+        const servicesHeading = snapshot.val();
+        if (servicesHeading) {
+          document.getElementById('servicesHeadingInput').value = servicesHeading;
+        }
+      });
+    };
+
+    // تحديث عنوان خدمة  رقم 1 في قاعدة البيانات
+    const updateServiceOneHeading = () => {
+      const serviceOneHeadingInput = document.getElementById('serviceOneHeadingInput').value;
+      if (serviceOneHeadingInput.trim() === "") {
+        alert("الرجاء إدخال عنوان خدمة  رقم 1");
+        return;
+      }
+
+      // تخزين عنوان خدمة  رقم 1 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceOneHeading').set(serviceOneHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان خدمة  رقم 1 بنجاح");
+          // document.getElementById('serviceOneHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان خدمة  رقم 1: " + error.message));
+    };
+
+    // تحميل عنوان خدمة  رقم 1 عند بداية الصفحة
+    const displayServiceOneHeading = () => {
+      const serviceOneHeadingRef = database.ref('/siteSettings/serviceOneHeading');
+      serviceOneHeadingRef.once('value', snapshot => {
+        const serviceOneHeading = snapshot.val();
+        if (serviceOneHeading) {
+          document.getElementById('serviceOneHeadingInput').value = serviceOneHeading;
+        }
+      });
+    };
+
+    // تحديث عنوان خدمة  رقم 2 في قاعدة البيانات
+    const updateServiceTwoHeading = () => {
+      const serviceTwoHeadingInput = document.getElementById('serviceTwoHeadingInput').value;
+      if (serviceTwoHeadingInput.trim() === "") {
+        alert("الرجاء إدخال عنوان خدمة  رقم 2");
+        return;
+      }
+
+      // تخزين عنوان خدمة معينة رقم 2 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceTwoHeading').set(serviceTwoHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان خدمة  رقم 2 بنجاح");
+          // document.getElementById('serviceTwoHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان خدمة  رقم 2: " + error.message));
+    };
+
+    // تحميل عنوان خدمة  رقم 2 عند بداية الصفحة
+    const displayServiceTwoHeading = () => {
+      const serviceTwoHeadingRef = database.ref('/siteSettings/serviceTwoHeading');
+      serviceTwoHeadingRef.once('value', snapshot => {
+        const serviceTwoHeading = snapshot.val();
+        if (serviceTwoHeading) {
+          document.getElementById('serviceTwoHeadingInput').value = serviceTwoHeading;
+        }
+      });
+    };
+
+
+    // تحديث عنوان خدمة  رقم 3 في قاعدة البيانات
+    const updateServiceThreeHeading = () => {
+      const serviceThreeHeadingInput = document.getElementById('serviceThreeHeadingInput').value;
+      if (serviceThreeHeadingInput.trim() === "") {
+        console.log("الرجاء إدخال عنوان خدمة رقم 3");
+        return;
+      }
+
+      // تخزين عنوان خدمة معينة رقم 3 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceThreeHeading').set(serviceThreeHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان خدمة معينة رقم 3 بنجاح");
+          // document.getElementById('serviceThreeHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان خدمة معينة رقم 3: " + error.message));
+    };
+
+
+    // تحميل عنوان خدمة  رقم 3 عند بداية الصفحة
+    const displayServiceThreeHeading = () => {
+      const serviceThreeHeadingRef = database.ref('/siteSettings/serviceThreeHeading');
+      serviceThreeHeadingRef.once('value', snapshot => {
+        const serviceThreeHeading = snapshot.val();
+        if (serviceThreeHeading) {
+          document.getElementById('serviceThreeHeadingInput').value = serviceThreeHeading;
+        }
+      });
+    };
+
+
+
+
+
+    // تحديث عنوان خدمة معينة رقم 4 في قاعدة البيانات
+    const updateServiceFourHeading = () => {
+      const serviceFourHeadingInput = document.getElementById('serviceFourHeadingInput').value;
+      if (serviceFourHeadingInput.trim() === "") {
+        console.log("الرجاء إدخال عنوان خدمة معينة رقم 4");
+        return;
+      }
+
+      // تخزين عنوان خدمة معينة رقم 4 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceFourHeading').set(serviceFourHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان خدمة معينة رقم 4 بنجاح");
+          // document.getElementById('serviceFourHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان خدمة معينة رقم 4: " + error.message));
+    };
+
+    // تحميل عنوان خدمة معينة رقم 4 عند بداية الصفحة
+    const displayServiceFourHeading = () => {
+      const serviceFourHeadingRef = database.ref('/siteSettings/serviceFourHeading');
+      serviceFourHeadingRef.once('value', snapshot => {
+        const serviceFourHeading = snapshot.val();
+        if (serviceFourHeading) {
+          document.getElementById('serviceFourHeadingInput').value = serviceFourHeading;
+        }
+      });
+    };
+
+
+    // تحديث وصف خدمة  رقم 1 في قاعدة البيانات
+    const updateServiceOneDescription = () => {
+      const serviceOneDescriptionInput = document.getElementById('serviceOneDescriptionInput').value;
+      if (serviceOneDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف خدمة رقم 1");
+        return;
+      }
+
+      // تخزين وصف خدمة  رقم 1 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceOneDescription').set(serviceOneDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف خدمة  رقم 1 بنجاح");
+          // document.getElementById('serviceOneDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف خدمة  رقم 1: " + error.message));
+    };
+
+    // تحميل وصف خدمة  رقم 2 عند بداية الصفحة
+    const displayServiceOneDescription = () => {
+      const serviceOneDescriptionRef = database.ref('/siteSettings/serviceOneDescription');
+      serviceOneDescriptionRef.once('value', snapshot => {
+        const serviceOneDescription = snapshot.val();
+        if (serviceOneDescription) {
+          document.getElementById('serviceOneDescriptionInput').value = serviceOneDescription;
+        }
+      });
+    };
+
+    // تحديث وصف خدمة  رقم 2 في قاعدة البيانات
+    const updateServiceTwoDescription = () => {
+      const serviceTwoDescriptionInput = document.getElementById('serviceTwoDescriptionInput').value;
+      if (serviceTwoDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف خدمة رقم 2");
+        return;
+      }
+
+      // تخزين وصف خدمة  رقم 2 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceTwoDescription').set(serviceTwoDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف خدمة  رقم 2 بنجاح");
+          // document.getElementById('serviceTwoDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف خدمة  رقم 2: " + error.message));
+    };
+
+    // تحميل وصف خدمة  رقم 2 عند بداية الصفحة
+    const displayServiceTwoDescription = () => {
+      const serviceTwoDescriptionRef = database.ref('/siteSettings/serviceTwoDescription');
+      serviceTwoDescriptionRef.once('value', snapshot => {
+        const serviceTwoDescription = snapshot.val();
+        if (serviceTwoDescription) {
+          document.getElementById('serviceTwoDescriptionInput').value = serviceTwoDescription;
+        }
+      });
+    };
+
+    // تحديث وصف خدمة  رقم 3 في قاعدة البيانات
+    const updateServiceThreeDescription = () => {
+      const serviceThreeDescriptionInput = document.getElementById('serviceThreeDescriptionInput').value;
+      if (serviceThreeDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف خدمة رقم 3");
+        return;
+      }
+
+      // تخزين وصف خدمة  رقم 3 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceThreeDescription').set(serviceThreeDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف خدمة  رقم 3 بنجاح");
+          // document.getElementById('serviceThreeDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف خدمة  رقم 3: " + error.message));
+    };
+
+    // تحميل وصف خدمة  رقم 3 عند بداية الصفحة
+    const displayServiceThreeDescription = () => {
+      const serviceThreeDescriptionRef = database.ref('/siteSettings/serviceThreeDescription');
+      serviceThreeDescriptionRef.once('value', snapshot => {
+        const serviceThreeDescription = snapshot.val();
+        if (serviceThreeDescription) {
+          document.getElementById('serviceThreeDescriptionInput').value = serviceThreeDescription;
+        }
+      });
+    };
+
+    // تحديث وصف خدمة  رقم 4 في قاعدة البيانات
+    const updateServiceFourDescription = () => {
+      const serviceFourDescriptionInput = document.getElementById('serviceFourDescriptionInput').value;
+      if (serviceFourDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف خدمة رقم 4");
+        return;
+      }
+
+      // تخزين وصف خدمة  رقم 4 في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/serviceFourDescription').set(serviceFourDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف خدمة  رقم 4 بنجاح");
+          // document.getElementById('serviceFourDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف خدمة  رقم 4: " + error.message));
+    };
+
+    // تحميل وصف خدمة  رقم 4 عند بداية الصفحة
+    const displayServiceFourDescription = () => {
+      const serviceFourDescriptionRef = database.ref('/siteSettings/serviceFourDescription');
+      serviceFourDescriptionRef.once('value', snapshot => {
+        const serviceFourDescription = snapshot.val();
+        if (serviceFourDescription) {
+          document.getElementById('serviceFourDescriptionInput').value = serviceFourDescription;
+        }
+      });
+    };
+    // نهاية جزء الخدمات
+
+    // بداية قسم من نحن
+
+    function showEditAboutUs() {
+      document.getElementById('editAboutUs').style.display = 'block';
+    }
+    function closeEditAboutUs() {
+      document.getElementById('editAboutUs').style.display = 'none';
+    }
+
+    // تحديث  عنوان "من نحن" في قاعدة البيانات
+    const updateAboutUsHeading = () => {
+      const aboutUsHeadingInput = document.getElementById('aboutUsHeadingInput').value;
+      if (aboutUsHeadingInput.trim() === "") {
+        alert("الرجاء إدخال عنوان من نحن");
+        return;
+      }
+
+      // تخزين  عنوان "من نحن" في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/aboutUsHeading').set(aboutUsHeadingInput)
+        .then(() => {
+          alert("تم تحديث عنوان  من نحن بنجاح");
+          // document.getElementById('aboutUsHeadingInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث عنوان من نحن: " + error.message));
+    };
+
+    // تحميل عنوان "من نحن" عند بداية الصفحة
+    const displayAboutUsHeading = () => {
+      const aboutUsHeadingRef = database.ref('/siteSettings/aboutUsHeading');
+      aboutUsHeadingRef.once('value', snapshot => {
+        const aboutUsHeading = snapshot.val();
+        if (aboutUsHeading) {
+          document.getElementById('aboutUsHeadingInput').value = aboutUsHeading;
+        }
+      });
+    };
+
+    // تحديث وصف قسم "من نحن" في قاعدة البيانات
+    const updateAboutUsDescription = () => {
+      const aboutUsDescriptionInput = document.getElementById('aboutUsDescriptionInput').value;
+      if (aboutUsDescriptionInput.trim() === "") {
+        alert("الرجاء إدخال وصف قسم من نحن");
+        return;
+      }
+
+      // تخزين وصف قسم "من نحن" في قاعدة بيانات جديدة باسم siteSettings
+      database.ref('/siteSettings/aboutUsDescription').set(aboutUsDescriptionInput)
+        .then(() => {
+          alert("تم تحديث وصف قسم من نحن بنجاح");
+          // document.getElementById('aboutUsDescriptionInput').value = ""; // مسح الحقل بعد التحديث
+        })
+        .catch(error => alert("حدث خطأ أثناء تحديث وصف قسم من نحن: " + error.message));
+    };
+
+    // تحميل وصف قسم "من نحن" عند بداية الصفحة
+    const displayAboutUsDescription = () => {
+      const aboutUsDescriptionRef = database.ref('/siteSettings/aboutUsDescription');
+      aboutUsDescriptionRef.once('value', snapshot => {
+        const aboutUsDescription = snapshot.val();
+        if (aboutUsDescription) {
+          document.getElementById('aboutUsDescriptionInput').value = aboutUsDescription;
+        }
+      });
+    };
+
+    // نهاية قسم من نحن
+    // تحميل البيانات عند بداية الصفحة
+
+    displaySiteName();
+    displaySiteDescription();
+    updateVisitorCount();
+    updateDataSize();
+    displayCustomers();
+    displayBookingButtonText();
+    displayAboutUsDescription();
+    displayServicesHeading();
+    displayServiceOneHeading();
+    displayServiceTwoHeading();
+    updateServiceThreeHeading();
+    updateServiceFourHeading();
+    displayServiceThreeHeading();
+    displayServiceFourHeading();
+    displayServiceOneDescription();
+    displayServiceTwoDescription();
+    displayServiceThreeDescription();
+    displayServiceFourDescription();
+    displayAboutUsHeading();
+    displaySiteHeading();
+  </script>
+</body>
+
+</html>
